@@ -1,18 +1,28 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
+const windowStateKeeper = require("electron-window-state");
 
 function createWindow() {
-  // Create the browser window.
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800,
+  });
+
   const mainWindow = new BrowserWindow({
-    height: 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 700,
+    minHeight: 300,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
-    width: 800,
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  mainWindow.loadURL("https://www.notion.so/login");
+
+  mainWindowState.manage(mainWindow);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -25,8 +35,6 @@ app.on("ready", () => {
   createWindow();
 
   app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
