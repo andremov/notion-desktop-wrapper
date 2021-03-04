@@ -41,7 +41,7 @@ export class TitleBar {
             path.join(__dirname, '../title-bar.html'),
         );
 
-        this.view.webContents.openDevTools();
+        // this.view.webContents.openDevTools();
 
         ipc.on('onClose', function (event, data) {
             window.getWindow().close();
