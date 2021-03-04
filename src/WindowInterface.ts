@@ -12,4 +12,8 @@ export abstract class WindowInterface {
     public dispose(): void {
         this.self.close();
     }
+
+    public getWindow(): BrowserWindow {
+        return this.self;
+    }
 }

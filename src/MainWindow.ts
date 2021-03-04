@@ -1,10 +1,14 @@
 import { BrowserWindow, BrowserView } from 'electron';
 import windowStateKeeper = require('electron-window-state');
+import * as path from 'path';
 import { LoadWindow } from './LoadWindow';
 import { WindowInterface } from './WindowInterface';
 import { TitleBar, titleHeight } from './titlebar';
 
 export class MainWindow extends WindowInterface {
+    private titleBar: TitleBar;
+    private notionView: BrowserView;
+
     constructor(lw: LoadWindow) {
         super();
 
@@ -71,5 +75,7 @@ export class MainWindow extends WindowInterface {
 
     private setPageTitle(args: any) {
         this.self.setTitle(args[1] + ' - Notion Desktop');
+    public getTitleBar(): TitleBar {
+        return this.titleBar;
     }
 }
