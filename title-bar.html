@@ -3,32 +3,30 @@
     <head>
         <meta charset="UTF-8" />
         <title>Notion Desktop</title>
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self'"
-        />
-        <meta
-            http-equiv="X-Content-Security-Policy"
-            content="default-src 'self'; script-src 'self'"
-        />
         <link rel="stylesheet" href="./styles/title-bar.css" />
     </head>
     <body>
-        <div class="title-bar">
-            <div class="window-title">
-                Notion Desktop
-            </div>
-            <div class="control-icons">
-                <div class="min">
-                    control_minimize
+        <div class="cut-out">
+            <div class="title-bar">
+                <div id="window-title">
+                    Notion Desktop
                 </div>
-                <div class="max">
-                    control_maximize
-                </div>
-                <div class="close">
-                    control_close
+                <div class="control-icons">
+                    <div id="min">
+                        control_minimize
+                    </div>
+                    <div id="max">
+                        control_maximize
+                    </div>
+                    <div id="close">
+                        control_close
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            require('./dist/renderer.js');
+        </script>
     </body>
 </html>
