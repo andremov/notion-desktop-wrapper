@@ -6,15 +6,22 @@ does not work.
 
 import { BrowserWindow, BrowserView } from 'electron';
 import * as path from 'path';
+import { ipcMain as ipc } from 'electron';
+import { MainWindow } from './MainWindow';
+import { mw } from './main';
 
 export const titleHeight = 40;
 
 export class TitleBar {
     private view: BrowserView;
 
-    constructor(window: BrowserWindow, viewWidth: number) {
-        this.view = new BrowserView();
-        window.addBrowserView(this.view);
+    constructor(window: MainWindow, viewWidth: number) {
+        this.view = new BrowserView({
+            webPreferences: {
+                nodeIntegration: true,
+            },
+        });
+        window.getWindow().addBrowserView(this.view);
 
         this.view.setBounds({
             x: 0,
@@ -35,7 +42,56 @@ export class TitleBar {
         );
 
         this.view.webContents.openDevTools();
-        console.log(this.view.webContents);
+
+        ipc.on('onClose', function (event, data) {
+            window.getWindow().close();
+        });
+
+        ipc.on('onMinimize', function (event, data) {
+            // if (window.isMinimized()) {
+            //     window.restore();
+            // } else {
+            window.getWindow().minimize();
+            // }
+        });
+
+        ipc.on('onMaximize', function (event, data) {
+            if (window.getWindow().isMaximized()) {
+                window.getWindow().unmaximize();
+                event.returnValue = 'control_maximize';
+            } else {
+                window.getWindow().maximize();
+                event.returnValue = 'control_restore';
+            }
+        });
+
+        ipc.on('checkMaxState', function (event, data) {
+            if (window.getWindow().isMaximized()) {
+                event.returnValue = 'control_restore';
+            } else {
+                event.returnValue = 'control_maximize';
+            }
+        });
+
+        window.getWindow().on('maximize', function () {
+            mw.getTitleBar()
+                .getView()
+                .webContents.send('otherMaximize', 'control_restore');
+        });
+
+        window.getWindow().on('unmaximize', function () {
+            mw.getTitleBar()
+                .getView()
+                .webContents.send('otherMaximize', 'control_maximize');
+        });
+    }
+
+    public setTitle(newTitle: string) {
+        this.view.webContents.send('newTitle', newTitle);
+    }
+
+    public getView(): BrowserView {
+        return this.view;
     }
 
     //
