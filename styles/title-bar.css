@@ -1,0 +1,55 @@
+@import 'custom-icons.css';
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 40px;
+}
+
+.title-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size: 1.25em;
+    padding-left: 20px;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #2f3437;
+}
+
+.title-bar div {
+    height: 100%;
+}
+
+.control-icons {
+    font-size: 11.8px;
+    font-family: 'win-icons';
+    display: flex;
+}
+
+.control-icons div {
+    margin: 0px;
+    padding: 18px;
+    padding-top: 12px;
+    padding-bottom: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.control-icons div:hover {
+    background-color: rgba(127, 127, 127, 0.2);
+}
+
+.control-icons .close:hover {
+    color: #eee;
+    background-color: #e81123;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+}

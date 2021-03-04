@@ -2,6 +2,7 @@ import { BrowserWindow, BrowserView } from 'electron';
 import windowStateKeeper = require('electron-window-state');
 import { LoadWindow } from './LoadWindow';
 import { WindowInterface } from './WindowInterface';
+import { TitleBar, titleHeight } from './titlebar';
 
 export class MainWindow extends WindowInterface {
     constructor(lw: LoadWindow) {
@@ -34,23 +35,29 @@ export class MainWindow extends WindowInterface {
         });
         // mainWindow.menuBarVisible = false;
 
-        this.self.loadFile('index.html');
-
+        // this.self.loadFile(path.join(__dirname, '../index.html'));
         mainWindowState.manage(this.self);
 
+        new TitleBar(this.self, mainWindowState.width - 16);
+
+        this.notionViewCreation(mainWindowState);
+    }
+
+    private notionViewCreation(windowState: windowStateKeeper.State) {
         const view = new BrowserView();
         this.self.addBrowserView(view);
         view.setBounds({
             x: 0,
-            y: 0,
-            width: mainWindowState.width - 16,
-            height: mainWindowState.height - 59,
+            y: titleHeight,
+            width: windowState.width - 16,
+            height: windowState.height - 59 - titleHeight,
+            // height: mainWindowState.height - 59,
         });
         view.setAutoResize({
             width: true,
             height: true,
-            horizontal: true,
-            vertical: true,
+            // horizontal: true,
+            // vertical: true,
         });
         view.webContents.loadURL('https://www.notion.so/login');
 
