@@ -16,8 +16,6 @@ export class MainWindow extends WindowInterface {
             this.self.show();
             setTimeout(() => lw.dispose(), 1000);
         });
-
-        // console.log(this.self.webContents);
     }
 
     protected basicWindowCreation() {
@@ -42,13 +40,14 @@ export class MainWindow extends WindowInterface {
         // this.self.loadFile(path.join(__dirname, '../index.html'));
         mainWindowState.manage(this.self);
 
-        new TitleBar(this.self, mainWindowState.width - 16);
+        this.titleBar = new TitleBar(this, mainWindowState.width);
 
         this.notionViewCreation(mainWindowState);
     }
 
-    private notionViewCreation(windowState: windowStateKeeper.State) {
+    private notionViewCreation(windowState: windowStateKeeper.State): void {
         const view = new BrowserView();
+        view.setBackgroundColor('#2f3437');
         this.self.addBrowserView(view);
         view.setBounds({
             x: 0,
@@ -66,11 +65,12 @@ export class MainWindow extends WindowInterface {
         view.webContents.loadURL('https://www.notion.so/login');
 
         // Open the DevTools.
-        view.webContents.openDevTools();
+        // view.webContents.openDevTools();
 
         view.webContents.on('page-title-updated', (...args) =>
             this.setPageTitle(args),
         );
+        this.notionView = view;
     }
 
     private setPageTitle(args: any) {
