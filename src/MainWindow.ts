@@ -23,13 +23,13 @@ export class MainWindow extends WindowInterface {
         });
 
         this.self = new BrowserWindow({
-            backgroundColor: '#2f3437',
             x: mainWindowState.x,
             y: mainWindowState.y,
             width: mainWindowState.width,
             height: mainWindowState.height,
             minWidth: 700,
             minHeight: 300,
+            title: 'Notion Desktop',
             // show: false,
             // frame: false,
         });
@@ -63,6 +63,13 @@ export class MainWindow extends WindowInterface {
 
         // Open the DevTools.
         view.webContents.openDevTools();
-        // this.self.webContents.openDevTools();
+
+        view.webContents.on('page-title-updated', (...args) =>
+            this.setPageTitle(args),
+        );
+    }
+
+    private setPageTitle(args: any) {
+        this.self.setTitle(args[1] + ' - Notion Desktop');
     }
 }
