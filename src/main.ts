@@ -6,7 +6,7 @@ export let mw: MainWindow;
 
 function startApp() {
     const lw = new LoadWindow();
-    new MainWindow(lw);
+    mw = new MainWindow(lw);
 }
 
 app.on('ready', () => {
