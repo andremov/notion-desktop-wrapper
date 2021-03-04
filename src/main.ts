@@ -2,6 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import { MainWindow } from './MainWindow';
 import { LoadWindow } from './LoadWindow';
 
+export let mw: MainWindow;
+
 function startApp() {
     const lw = new LoadWindow();
     new MainWindow(lw);
