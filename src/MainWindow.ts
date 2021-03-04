@@ -32,8 +32,8 @@ export class MainWindow extends WindowInterface {
             minWidth: 700,
             minHeight: 300,
             title: 'Notion Desktop',
-            // show: false,
-            // frame: false,
+            show: false,
+            frame: false,
         });
         // mainWindow.menuBarVisible = false;
 
@@ -52,8 +52,8 @@ export class MainWindow extends WindowInterface {
         view.setBounds({
             x: 0,
             y: titleHeight,
-            width: windowState.width - 16,
-            height: windowState.height - 59 - titleHeight,
+            width: windowState.width,
+            height: windowState.height - titleHeight,
             // height: mainWindowState.height - 59,
         });
         view.setAutoResize({
@@ -75,6 +75,9 @@ export class MainWindow extends WindowInterface {
 
     private setPageTitle(args: any) {
         this.self.setTitle(args[1] + ' - Notion Desktop');
+        this.titleBar.setTitle(args[1] + ' - Notion Desktop');
+    }
+
     public getTitleBar(): TitleBar {
         return this.titleBar;
     }
