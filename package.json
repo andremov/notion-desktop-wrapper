@@ -1,14 +1,19 @@
 {
     "name": "notion-desktop-wrapper",
     "version": "1.0.0",
+    "author": "Andrés Movilla",
     "description": "A Notion Desktop App with a pretty title bar.",
+    "main": "./dist/main.js",
+    "repository": "https://github.com/andremov/notion-desktop-wrapper",
+    "bugs": "https://github.com/andremov/notion-desktop-wrapper/issues",
     "scripts": {
         "build": "tsc",
         "watch": "tsc -w",
         "lint": "eslint -c .eslintrc --ext .ts ./src",
-        "start": "npm run build && electron ./dist/main.js"
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make"
     },
-    "repository": "https://github.com/andremov/notion-desktop-wrapper",
     "keywords": [
         "Electron",
         "typescript",
@@ -18,6 +23,11 @@
     ],
     "license": "CC0-1.0",
     "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.54",
+        "@electron-forge/maker-deb": "^6.0.0-beta.54",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+        "@electron-forge/maker-zip": "^6.0.0-beta.54",
         "@typescript-eslint/eslint-plugin": "^3.4.0",
         "@typescript-eslint/parser": "^3.4.0",
         "electron": "^11.3.0",
@@ -25,6 +35,34 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
+        "electron-squirrel-startup": "^1.0.0",
         "electron-window-state": "^5.0.3"
+    },
+    "config": {
+        "forge": {
+            "packagerConfig": {},
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "notion_desktop_wrapper"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ]
+        }
     }
 }
